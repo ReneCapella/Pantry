@@ -6,5 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+
+# create a Pantry
+p = Pantry.create()
+
 #create a food item
-FoodItem.create(name: "Apple")
+FoodItem.create(name: "Apple", pantry_id: p.id)

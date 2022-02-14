@@ -1,4 +1,5 @@
 class FoodItemsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_food_item, only: %i[ show edit update destroy ]
 
   # GET /food_items or /food_items.json
@@ -65,6 +66,7 @@ class FoodItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def food_item_params
-      params.require(:food_item).permit(:name)
+      params["pantry_id"] = 2
+      params.fetch(:food_item, {}).permit(:name, :pantry_id)
     end
 end

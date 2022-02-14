@@ -1,0 +1,13 @@
+<p style="color: green"><%= notice %></p>
+
+<% if @pantry.food_items %>
+  <%= render @pantry.food_items%>
+<% end %>
+
+<div>
+  <%= link_to "Add food to this pantry", new_food_item_path(@pantry.id) %>
+  <%= link_to "Edit this pantry", edit_pantry_path(@pantry) %> |
+  <%= link_to "Back to pantries", pantries_path %>
+
+  <%= button_to "Destroy this pantry", @pantry, method: :delete %>
+</div>
