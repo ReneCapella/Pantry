@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  producer: one
+  store: one
+  item_name: MyString
+  best_by: 2022-02-16 12:00:07
+  exp_date: 2022-02-16 12:00:07
+  recall: false
+
+two:
+  producer: two
+  store: two
+  item_name: MyString
+  best_by: 2022-02-16 12:00:07
+  exp_date: 2022-02-16 12:00:07
+  recall: false

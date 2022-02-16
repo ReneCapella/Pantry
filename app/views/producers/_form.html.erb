@@ -1,0 +1,22 @@
+<%= form_with(model: producer) do |form| %>
+  <% if producer.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(producer.errors.count, "error") %> prohibited this producer from being saved:</h2>
+
+      <ul>
+        <% producer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
