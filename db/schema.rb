@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_230729) do
+ActiveRecord::Schema.define(version: 2022_02_18_053644) do
 
   create_table "batches", force: :cascade do |t|
     t.integer "producer_id", null: false
@@ -30,6 +30,10 @@ ActiveRecord::Schema.define(version: 2022_02_16_230729) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "pantry_id"
+    t.integer "batch_id"
+    t.integer "order_id"
+    t.index ["batch_id"], name: "index_food_items_on_batch_id"
+    t.index ["order_id"], name: "index_food_items_on_order_id"
     t.index ["pantry_id"], name: "index_food_items_on_pantry_id"
   end
 
@@ -81,5 +85,7 @@ ActiveRecord::Schema.define(version: 2022_02_16_230729) do
 
   add_foreign_key "batches", "producers"
   add_foreign_key "batches", "stores"
+  add_foreign_key "food_items", "batches"
+  add_foreign_key "food_items", "orders"
   add_foreign_key "orders", "stores"
 end

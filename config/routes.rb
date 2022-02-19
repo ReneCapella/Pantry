@@ -21,4 +21,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pantries#index"
+
+  # api
+  namespace :api do
+    namespace :v1 do
+      resources :orders, only: [:index, :show, :create, :destroy]
+    end
+  end
 end
