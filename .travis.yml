@@ -1,0 +1,17 @@
+dist: xenial
+language: ruby
+cache:
+  bundler: true
+  yarn: true
+  directories:
+    - "node_modules"
+services:
+  - postgresql
+install:
+  - bundle install --jobs=3 --retry=3 --deployment
+  - nvm install
+  - bin/yarn
+before_script:
+  - bin/rails db:prepare
+script:
+  - bin/rails test
