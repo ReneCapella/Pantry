@@ -1,2 +1,4 @@
 runtime: ruby27
-entrypoint: rails server
+entrypoint: bundle exec rails server -p $PORT
+env_variables:
+  RAILS_ENV: production

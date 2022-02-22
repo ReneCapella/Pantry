@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2022_02_18_053644) do
 
-  create_table "batches", force: :cascade do |t|
-    t.integer "producer_id", null: false
-    t.integer "store_id", null: false
+  create_table "batches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "producer_id", null: false
+    t.bigint "store_id", null: false
     t.string "item_name"
     t.datetime "best_by", precision: 6
     t.datetime "exp_date", precision: 6
@@ -25,52 +25,52 @@ ActiveRecord::Schema.define(version: 2022_02_18_053644) do
     t.index ["store_id"], name: "index_batches_on_store_id"
   end
 
-  create_table "food_items", force: :cascade do |t|
+  create_table "food_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "pantry_id"
-    t.integer "batch_id"
-    t.integer "order_id"
+    t.bigint "pantry_id"
+    t.bigint "batch_id"
+    t.bigint "order_id"
     t.index ["batch_id"], name: "index_food_items_on_batch_id"
     t.index ["order_id"], name: "index_food_items_on_order_id"
     t.index ["pantry_id"], name: "index_food_items_on_pantry_id"
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.integer "store_id", null: false
+  create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "store_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["store_id"], name: "index_orders_on_store_id"
   end
 
-  create_table "pantries", force: :cascade do |t|
+  create_table "pantries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "producers", force: :cascade do |t|
+  create_table "producers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "stores", force: :cascade do |t|
+  create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "user_pantries", force: :cascade do |t|
-    t.integer "pantry_id"
-    t.integer "user_id"
+  create_table "user_pantries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "pantry_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["pantry_id"], name: "index_user_pantries_on_pantry_id"
     t.index ["user_id"], name: "index_user_pantries_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

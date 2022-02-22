@@ -124,6 +124,7 @@ GEM
     mini_portile2 (2.7.1)
     minitest (5.15.0)
     msgpack (1.4.4)
+    mysql2 (0.5.3)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -214,7 +215,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     stimulus-rails (1.0.2)
       railties (>= 6.0.0)
     strscan (3.0.1)
@@ -255,13 +255,13 @@ DEPENDENCIES
   devise (~> 4.8)
   importmap-rails
   jbuilder
+  mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.1)
   rails-erd
   sassc-rails
   selenium-webdriver
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
   tzinfo-data
@@ -269,7 +269,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 3.0.1p64
+   ruby 2.7.1p83
 
 BUNDLED WITH
    2.3.5
