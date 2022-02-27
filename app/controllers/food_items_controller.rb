@@ -66,7 +66,6 @@ class FoodItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def food_item_params
-      params["pantry_id"] = 2
       params.fetch(:food_item, {}).permit(:name, :pantry_id)
     end
 end
