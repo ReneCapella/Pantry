@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   root "pantries#index"
 
   # api
-  namespace :api do
+  namespace :api, defaults: {format: :json} do
     namespace :v1 do
       resources :orders, only: [:index, :show, :create, :destroy]
     end
