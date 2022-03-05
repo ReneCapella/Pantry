@@ -22,7 +22,15 @@ class FoodItemsController < ApplicationController
 
   # POST /food_items or /food_items.json
   def create
-    @food_item = FoodItem.new(food_item_params)
+    puts "!!!!!!!!!!!!!!!!!!!!"
+    puts food_item_params
+    order = Order.find(food_item_params["order_id"])
+    pantry = Pantry.find()
+    puts order.food_items
+    # @food_item = FoodItem.new(food_item_params)
+    if order
+      order.transfer_ownership(food_item_params["pantry_id"])
+    end
 
     respond_to do |format|
       if @food_item.save
@@ -66,6 +74,6 @@ class FoodItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def food_item_params
-      params.fetch(:food_item, {}).permit(:name, :pantry_id)
+      params.fetch(:food_item, {}).permit(:name, :pantry_id, :order_id)
     end
 end

@@ -3,6 +3,11 @@ class FoodItem < ApplicationRecord
   belongs_to :order
   belongs_to :batch
 
+  accepts_nested_attributes_for :batch, :reject_if => :all_blank
+  accepts_nested_attributes_for :order
+  accepts_nested_attributes_for :pantry
+
+
   before_save :set_default_name
 
   def set_default_name
