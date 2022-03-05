@@ -1,21 +1,44 @@
-<h1>Add Food Items</h1>
-
-<%= render "form", food_item: @food_item %>
-
-<br>
-
+<h1>Enter your Order</h1>
+<button id="getUserMediaButton">Scan a Recipt</button>
+<button id="qr-button">Detect barcode</button>
 <div>
   <video id="video" autoplay></video>
-  <button id="getUserMediaButton">Scan a Recipt</button>
 </div>
-<button id="qr-button">Detect barcode</button>
-<div id="message"></div>
 
+<%= form_with(model: @food_item) do |form| %>
+  <% if @food_item.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@food_item.errors.count, "error") %> prohibited this food_item from being saved:</h2>
+
+      <ul>
+        <% @food_item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :order_id, style: "display: block" %>
+    <%= form.text_field :order_id, {id: "order-id"} %>
+  </div>
+
+  <div>
+    <%= form.collection_select(:pantry_id, Pantry.all, :id, :name, {prompt: "Select a Pantry"}, {style: "display:block"}) %>
+  </div>
+
+  <div>
+    <%= form.submit "Add Food Items to my Pantry"%>
+  </div>
+<% end %>
 
 <div>
   <%= link_to "Back to food items", food_items_path %>
 </div>
+
+
 <script type="text/javascript">
+  window.onload = function() {
     // check compatibility
     if (!('BarcodeDetector' in window)) {
       console.log('Barcode Detector is not supported by this browser.');
@@ -26,7 +49,6 @@
     var imageCapture;
 
     function onGetUserMediaButtonClick() {
-      console.log('!!!!');
       navigator.mediaDevices.getUserMedia({video: true})
       .then(mediaStream => {
         document.querySelector('video').srcObject = mediaStream;
@@ -89,10 +111,9 @@
 
     const barcode = document.getElementById('video');
     const button = document.getElementById('qr-button');
-    const message = document.getElementById('message');
+    const message = document.getElementById('order-id');
     const detectBarcode = () => {
-
-
+      console.log('We be here, toto')
       const barcodeDetector = new BarcodeDetector({
         formats: [
         "aztec",
@@ -114,9 +135,12 @@
       barcodeDetector
       .detect(barcode)
       .then((data) => {
-        console.log(data);
+        console.log(message)
         const { rawValue } = data[0];
-        message.innerText = `Barcode value: ${rawValue}`;
+        console.log(data);
+
+        message.value = `${rawValue}`;
+        console.log(message.value);
       })
       .catch((e) => {
         console.error(`Barcode Detection failed: ${e}`);
@@ -124,4 +148,6 @@
     };
 
     button.addEventListener('click', detectBarcode);
+  }
+
   </script>

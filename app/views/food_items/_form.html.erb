@@ -13,11 +13,11 @@
 
   <div>
     <%= form.label :order_id, style: "display: block" %>
-    <%= form.text_field :order_id %>
+    <%= form.text_field :order_id, {id: "order-id"} %>
   </div>
 
   <div>
-    <%= form.collection_select(:pantry_id, Pantry.all, :id, :id, {prompt: "Select a Pantry"}, {style: "display:block"}) %>
+    <%= form.collection_select(:pantry_id, Pantry.all, :id, :name, {prompt: "Select a Pantry"}, {style: "display:block"}) %>
   </div>
 
   <div>
