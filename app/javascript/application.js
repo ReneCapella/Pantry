@@ -3,8 +3,8 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log('ServiceWorker registered: ', registration)
-      });
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registered: ', registration)
   });
+});

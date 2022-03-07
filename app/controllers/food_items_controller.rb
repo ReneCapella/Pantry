@@ -22,24 +22,20 @@ class FoodItemsController < ApplicationController
 
   # POST /food_items or /food_items.json
   def create
-    puts "!!!!!!!!!!!!!!!!!!!!"
-    puts food_item_params
+    #TODO this really isn't correct: users are not creating new food items: this should be an update
     order = Order.find(food_item_params["order_id"])
-    pantry = Pantry.find()
-    puts order.food_items
     # @food_item = FoodItem.new(food_item_params)
     if order
       order.transfer_ownership(food_item_params["pantry_id"])
     end
 
     respond_to do |format|
-      if @food_item.save
         format.html { redirect_to food_item_url(@food_item), notice: "Food item was successfully created." }
         format.json { render :show, status: :created, location: @food_item }
-      else
+      # else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @food_item.errors, status: :unprocessable_entity }
-      end
+      # end
     end
   end
 
