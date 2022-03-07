@@ -47,9 +47,8 @@ ActiveRecord::Schema.define(version: 2022_03_07_171650) do
   create_table "pantries", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name", default: "my pantry"
     t.boolean "primary", default: false, null: false
-    t.string "pantry_name", default: "my pantry"
+    t.string "name", default: "my pantry"
   end
 
   create_table "producers", force: :cascade do |t|
@@ -69,7 +68,6 @@ ActiveRecord::Schema.define(version: 2022_03_07_171650) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "primary", default: false, null: false
     t.index ["pantry_id"], name: "index_user_pantries_on_pantry_id"
     t.index ["user_id"], name: "index_user_pantries_on_user_id"
   end
