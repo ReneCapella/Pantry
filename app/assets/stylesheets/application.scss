@@ -13,3 +13,41 @@
  *= require_tree .
  *= require_self
  */
+ .fixedButton{
+     position: fixed;
+     bottom: 0px;
+     right: 0px;
+     padding: 20px;
+ }
+
+ .fixedIcon1{
+     position: fixed;
+     bottom: 130px;
+     right: 0px;
+     padding: 20px;
+ }
+ .fixedIcon2{
+     position: fixed;
+     bottom: 220px;
+     right: 0px;
+     padding: 20px;
+ }
+
+.slider {
+  display: none;
+  height: 300px;
+  width: 200px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  overflow-y: hidden;
+  max-height: 300px; /* approximate max height */
+
+  transition-property: all;
+  transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slider.open {
+	display: block;
+}

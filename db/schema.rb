@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_07_171650) do
+ActiveRecord::Schema.define(version: 2022_03_15_020439) do
 
   create_table "batches", force: :cascade do |t|
     t.integer "producer_id", null: false
-    t.integer "store_id", null: false
+    t.integer "store_id"
     t.string "item_name"
     t.datetime "best_by", precision: 6
     t.datetime "exp_date", precision: 6
-    t.boolean "recall"
+    t.boolean "recall", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["producer_id"], name: "index_batches_on_producer_id"

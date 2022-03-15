@@ -4,39 +4,54 @@
     <title>Pantry</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#319197">
-    <link rel="manifest" href=manifest.json crossorigin="use-credentials" />
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-
-
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+
   </head>
 
   <body>
-    <nav>
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Logo</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
+      <%= image_tag 'meal512.png', class: 'navbar-brand', style: "height: 100px;" %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href=<%=pantries_path%> >My Pantries<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" >
+            <a class="nav-link" href=<%=charities_path%> >Donate</a>
+          </li>
         </ul>
       </div>
     </nav>
     <%= yield %>
-    <!-- Compiled and minified JavaScript -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <div class="slider "id="slider">
+      <div class="fixedIcon1">
+        <% if @pantry %>
+          <%= link_to image_tag('meal512.png', style: 'height: 80px'), new_food_item_path(@pantry.id) %>
+        <% else %>
+          <%= link_to image_tag('meal512.png', style: 'height: 80px'), new_food_item_path() %>
+        <% end %>
+      </div>
+      <div class="fixedIcon2">
+        <%= link_to image_tag('donation.png', style: 'height: 80px'), charities_path %>
+      </div>
+    </div>
+    <div class="fixedButton">
+       <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 120px'%></div>
+    </div>
+
   </body>
-
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </html>

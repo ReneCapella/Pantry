@@ -24,7 +24,6 @@ module Api
 
       # POST /orders or /orders.json
       def create
-        puts order_params
         @order = Order.new(order_params)
 
         respond_to do |format|

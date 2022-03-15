@@ -1,13 +1,50 @@
-<p style="color: green"><%= notice %></p>
+
+
+<div class="notice-board">
+</div>
 
 <% if @pantry.food_items %>
-  <%= render @pantry.food_items%>
+  <div class="container-fluid">
+
+    <% @pantry.food_items.each do |food_item| %>
+    <div id="food_items">
+      <% if Date.today < food_item.batch.exp_date && Date.today < food_item.batch.best_by %>
+      <!-- food is fresh! -->
+        <div class="card text-white bg-success mb-3 mx-auto" style="max-width: 18rem;">
+          <div class="card-header"><%= food_item.name %> </div>
+          <div class="card-body text-white">
+            <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
+            <p class="card-text">Expiration date: <%= food_item.batch.exp_date %> </p>
+          </div>
+        </div>
+      <% elsif Date.today <= food_item.batch.exp_date && Date.today >= food_item.batch.best_by %>
+      <!-- food is almost not fresh -->
+        <div class="card text-white bg-warning mb-3 mx-auto" style="max-width: 18rem;">
+          <div class="card-header"><%= food_item.name %> </div>
+          <div class="card-body text-white">
+            <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
+            <p class="card-text">Expiration date: <%= food_item.batch.exp_date %> </p>
+            <a href="<%= charities_path %> " class="btn btn-primary">Donate this item</a>
+          </div>
+        </div>
+
+      <% else %>
+      <!-- food is bad -->
+      <div class="card text-white bg-danger mb-3 mx-auto" style="max-width: 18rem;">
+        <div class="card-header"><%= food_item.name %> </div>
+        <div class="card-body text-white">
+          <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
+          <p class="card-text">Expiration date: <%= food_item.batch.exp_date %> </p>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+<% else %>
+  <h3>Nothing here yet!</h3>
 <% end %>
 
 <div>
-  <%= link_to "Add food to this pantry", new_food_item_path(@pantry.id) %>
-  <%= link_to "Edit this pantry", edit_pantry_path(@pantry) %> |
   <%= link_to "Back to pantries", pantries_path %>
-
-  <%= button_to "Destroy this pantry", @pantry, method: :delete %>
 </div>
