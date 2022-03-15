@@ -10,17 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_04_215829) do
+ActiveRecord::Schema.define(version: 2022_03_15_020439) do
+
+  create_table "batches", force: :cascade do |t|
+    t.integer "producer_id", null: false
+    t.integer "store_id"
+    t.string "item_name"
+    t.datetime "best_by", precision: 6
+    t.datetime "exp_date", precision: 6
+    t.boolean "recall", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["producer_id"], name: "index_batches_on_producer_id"
+    t.index ["store_id"], name: "index_batches_on_store_id"
+  end
 
   create_table "food_items", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "pantry_id"
+    t.integer "batch_id"
+    t.integer "order_id"
+    t.index ["batch_id"], name: "index_food_items_on_batch_id"
+    t.index ["order_id"], name: "index_food_items_on_order_id"
     t.index ["pantry_id"], name: "index_food_items_on_pantry_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "store_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["store_id"], name: "index_orders_on_store_id"
+  end
+
   create_table "pantries", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "primary", default: false, null: false
+    t.string "name", default: "my pantry"
+  end
+
+  create_table "producers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -47,4 +85,9 @@ ActiveRecord::Schema.define(version: 2022_02_04_215829) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "batches", "producers"
+  add_foreign_key "batches", "stores"
+  add_foreign_key "food_items", "batches"
+  add_foreign_key "food_items", "orders"
+  add_foreign_key "orders", "stores"
 end

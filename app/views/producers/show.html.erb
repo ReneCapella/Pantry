@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @producer %>
+
+<div>
+  <%= link_to "Edit this producer", edit_producer_path(@producer) %> |
+  <%= link_to "Back to producers", producers_path %>
+
+  <%= button_to "Destroy this producer", @producer, method: :delete %>
+</div>

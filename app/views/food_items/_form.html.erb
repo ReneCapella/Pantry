@@ -12,13 +12,15 @@
   <% end %>
 
   <div>
-    <%= params %>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-    <%= form.collection_select(:pantry_id, Pantry.all, :id, :id) %>
+    <%= form.label :order_id, style: "display: block" %>
+    <%= form.text_field :order_id, {id: "order-id"} %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.collection_select(:pantry_id, Pantry.all, :id, :name, {prompt: "Select a Pantry"}, {style: "display:block"}) %>
+  </div>
+
+  <div>
+    <%= form.submit "Add Food Items to my Pantry"%>
   </div>
 <% end %>

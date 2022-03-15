@@ -1,14 +1,28 @@
-<p style="color: green"><%= notice %></p>
 
-<h1>Pantries</h1>
+<div class="container-fluid">
+  <p style="color: green"><%= notice %></p>
 
-<div id="pantries">
   <% @pantries.each do |pantry| %>
-    <%= render pantry %>
-    <p>
-      <%= link_to "Show this pantry", pantry %>
-    </p>
-  <% end %>
+    <div id="pantries">
+      <div class="card mb-3 shadow mx-auto" style="width: 18rem;">
+        <div class="card-header">
+          <%= pantry.name %>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% if pantry_expiration_count(pantry.id) == 0 %>
+            <li class="list-group-item" id="expiration">All items fresh</li>
+          <% else %>
+            <li class="list-group-item" id="expiration">Items are expired</li>
+          <% end %>
+          <li class="list-group-item" id="donations">Donatable Item Count: <%= donatable_item_count(pantry.id) %></li>
+          <li class="list-group-item" id="show-pantry"><%= link_to "Look Inside", pantry %></li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+  <div class="card mb-3 shadow mx-auto" style="width: 18rem;">
+    <div class="card-header">
+      <%= link_to "New pantry", new_pantry_path %>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New pantry", new_pantry_path %>

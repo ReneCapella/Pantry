@@ -9,7 +9,7 @@ class PantriesController < ApplicationController
 
   # GET /pantries/1 or /pantries/1.json
   def show
-    puts @pantry
+    
   end
 
   # GET /pantries/new
