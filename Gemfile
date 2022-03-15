@@ -74,5 +74,5 @@ end
 
 gem "devise", "~> 4.8"
 
-gem 'bootstrap', '~> 4.4.1'
-gem 'jquery-rails'
+# gem 'bootstrap', '~> 4.4.1'
+# gem 'jquery-rails'
