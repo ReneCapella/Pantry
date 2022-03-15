@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
   </head>
 
@@ -31,6 +32,23 @@
       </div>
     </nav>
     <%= yield %>
+
+    <div class="slider "id="slider">
+      <div class="fixedIcon1">
+        <% if @pantry %>
+          <%= link_to image_tag('meal512.png', style: 'height: 80px'), new_food_item_path(@pantry.id) %>
+        <% else %>
+          <%= link_to image_tag('meal512.png', style: 'height: 80px'), new_food_item_path() %>
+        <% end %>
+      </div>
+      <div class="fixedIcon2">
+        <%= link_to image_tag('donation.png', style: 'height: 80px'), charities_path %>
+      </div>
+    </div>
+    <div class="fixedButton">
+       <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 120px'%></div>
+    </div>
+
   </body>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
