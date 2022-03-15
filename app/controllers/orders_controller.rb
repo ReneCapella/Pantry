@@ -12,9 +12,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    puts "WE ARE HERE"
     @order = Order.new
-    puts @order
   end
 
   # GET /orders/1/edit
