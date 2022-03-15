@@ -28,4 +28,7 @@ Rails.application.routes.draw do
       resources :orders, only: [:index, :show, :create, :destroy]
     end
   end
+
+  get '/search' => 'charities#search'
+  get '/charities' => 'charities#index'
 end

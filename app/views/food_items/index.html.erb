@@ -1,13 +1,38 @@
+<div class="container-fluid card-group">
 <p style="color: green"><%= notice %></p>
 
-<h1>Food items</h1>
-
-<div id="food_items">
   <% @food_items.each do |food_item| %>
-    <%= render food_item %>
-    <p>
-      <%= link_to "Show this food item", food_item %>
-    </p>
+  <div id="food_items">
+    <% if Date.today < food_item.batch.exp_date &&  Date.today < food_item.batch.best_by %>
+    <!-- food is fresh! -->
+      <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <div class="card-header"><%= food_item.name %> </div>
+        <div class="card-body text-success">
+          <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
+          <p class="card-text">Expiration date: <%= food_item.batch.expiration %> </p>
+        </div>
+      </div>
+    <% else if Date.today <= food_item.batch.exp_date &&  Date.today >= food_item.batch.best_by%>
+    <!-- food is almost not fresh -->
+      <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+        <div class="card-header"><%= food_item.name %> </div>
+        <div class="card-body text-warning">
+          <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
+          <p class="card-text">Expiration date: <%= food_item.batch.expiration %> </p>
+          <a href="<%= charities_path %> " class="btn btn-primary">Donate this item</a>
+        </div>
+      </div>
+    </div>
+    <% else %>
+    <!-- food is bad -->
+    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+      <div class="card-header"><%= food_item.name %> </div>
+      <div class="card-body text-danger">
+        <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
+        <p class="card-text">Expiration date: <%= food_item.batch.expiration %> </p>
+      </div>
+    </div>
+    <% end %>
   <% end %>
 </div>
 
