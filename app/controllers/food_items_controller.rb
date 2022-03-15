@@ -13,6 +13,9 @@ class FoodItemsController < ApplicationController
 
   # GET /food_items/new
   def new
+    if params["format"]
+      @pantry = Pantry.find(params["format"])
+    end 
     @food_item = FoodItem.new
   end
 
@@ -24,18 +27,12 @@ class FoodItemsController < ApplicationController
   def create
     #TODO this really isn't correct: users are not creating new food items: this should be an update
     order = Order.find(food_item_params["order_id"])
-    # @food_item = FoodItem.new(food_item_params)
     if order
       order.transfer_ownership(food_item_params["pantry_id"])
     end
 
     respond_to do |format|
-        format.html { redirect_to food_item_url(@food_item), notice: "Food item was successfully created." }
-        format.json { render :show, status: :created, location: @food_item }
-      # else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @food_item.errors, status: :unprocessable_entity }
-      # end
+        format.html { redirect_to pantry_path(food_item_params["order_id"]), notice: "Food item was successfully transfered." }
     end
   end
 

@@ -23,18 +23,31 @@
     <%= form.text_field :order_id, {id: "order-id"} %>
   </div>
 
-  <div>
-    <%= form.collection_select(:pantry_id, Pantry.all, :id, :name, {prompt: "Select a Pantry"}, {style: "display:block"}) %>
-  </div>
+  <% if @pantry %>
+    <div>
+      <%= form.label :pantry_id, style: "display: none" %>
+      <%= form.hidden_field :pantry_id, value: @pantry.id %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.collection_select(:pantry_id, Pantry.all, :id, :name, {prompt: "Select a Pantry"}, {style: "display:block"}) %>
+    </div>
+  <% end %>
 
   <div>
     <%= form.submit "Add Food Items to my Pantry"%>
   </div>
 <% end %>
 
-<div>
-  <%= link_to "Back to food items", food_items_path %>
-</div>
+<% if @pantry %>
+  <div>
+    <%= link_to "Back to food items", pantry_path(@pantry.id) %>
+  </div>
+<% else %>
+  <div>
+    <%= link_to "Back to food items", pantries_path %>
+  </div>
+<% end %>
 
 
 <script type="text/javascript">
