@@ -10,29 +10,32 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
-      <%= image_tag 'meal512.png', class: 'navbar-brand', style: "height: 100px;" %>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg fixed-top">
+      <div class="container">
+        <%= link_to image_tag('meal512.png', style: 'height: 105px'), pantries_path %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href=<%=pantries_path%> >My Pantries<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item" >
-            <a class="nav-link" href=<%=charities_path%> >Donate</a>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item active">
+              <a class="nav-link" href=<%= about_path %>>About<span class="sr-only">(current)</span></a>
+            </li>
+            <% if current_user %>
+              <li class="nav-item d-flex justify-content-center" >
+                <%= button_to('Logout', destroy_user_session_path, :method => :delete, class:'nav-link btn')%>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
+
     </nav>
     <%= yield %>
-
     <div class="slider "id="slider">
       <div class="fixedIcon1">
         <% if @pantry %>
@@ -48,6 +51,7 @@
     <div class="fixedButton">
        <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 120px'%></div>
     </div>
+
 
   </body>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

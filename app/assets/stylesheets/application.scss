@@ -13,11 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+   padding-top: 130px;
+ }
  .fixedButton{
      position: fixed;
      bottom: 0px;
      right: 0px;
-     padding: 20px;
+     padding: 5px;
+     background-color: white;
+     border-radius: 50%;
  }
 
  .fixedIcon1{
