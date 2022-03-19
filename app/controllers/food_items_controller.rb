@@ -1,10 +1,12 @@
 class FoodItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_food_item, only: %i[ show edit update destroy ]
+  before_action :set_food_item, only: %i[ show edit update donate ]
 
   # GET /food_items or /food_items.json
   def index
-    @food_items = FoodItem.all
+    @non_donated_food_items = FoodItem.where(donated: false)
+    @marked_for_donation = FoodItem.where(donated: true)
+
   end
 
   # GET /food_items/1 or /food_items/1.json
@@ -15,7 +17,7 @@ class FoodItemsController < ApplicationController
   def new
     if params["format"]
       @pantry = Pantry.find(params["format"])
-    end 
+    end
     @food_item = FoodItem.new
   end
 
@@ -32,7 +34,7 @@ class FoodItemsController < ApplicationController
     end
 
     respond_to do |format|
-        format.html { redirect_to pantry_path(food_item_params["order_id"]), notice: "Food item was successfully transfered." }
+        format.html { redirect_to pantry_path(food_item_params["pantry_id"]), notice: "Food item was successfully transfered." }
     end
   end
 
@@ -49,13 +51,19 @@ class FoodItemsController < ApplicationController
     end
   end
 
+  def donate
+    #update the donated column on food item
+    #@food_item.update(donated: true)
+  end
+
   # DELETE /food_items/1 or /food_items/1.json
   def destroy
-    @food_item.destroy
 
+    @food_item = FoodItem.find(params[:id])
+    pantry_id = @food_item.pantry_id
+    @food_item.destroy
     respond_to do |format|
-      format.html { redirect_to food_items_url, notice: "Food item was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_back fallback_location: pantry_path(pantry_id) }
     end
   end
 

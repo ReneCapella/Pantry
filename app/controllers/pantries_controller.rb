@@ -9,7 +9,7 @@ class PantriesController < ApplicationController
 
   # GET /pantries/1 or /pantries/1.json
   def show
-    
+
   end
 
   # GET /pantries/new
@@ -62,6 +62,8 @@ class PantriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pantry
+      puts "PARAMS PANTRY"
+      puts params
       @pantry = Pantry.find(params[:id])
     end
 
