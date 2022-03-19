@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Pantry</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,7 +15,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg fixed-top">
       <div class="container">
-        <%= link_to image_tag('meal512.png', style: 'height: 105px'), pantries_path %>
+        <%= link_to image_tag('meal512.png', style: 'height: 105px', alt: 'food on plate icon'), pantries_path %>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -39,21 +39,34 @@
     <div class="slider "id="slider">
       <div class="fixedIcon1">
         <% if @pantry %>
-          <%= link_to image_tag('meal512.png', style: 'height: 80px'), new_food_item_path(@pantry.id) %>
+          <%= link_to image_tag('meal512.png', style: 'height: 80px', alt: 'food on plate icon'), new_food_item_path(@pantry.id) %>
         <% else %>
-          <%= link_to image_tag('meal512.png', style: 'height: 80px'), new_food_item_path() %>
+          <%= link_to image_tag('meal512.png', style: 'height: 80px', alt: 'food on plate icon'), new_food_item_path() %>
         <% end %>
       </div>
       <div class="fixedIcon2">
-        <%= link_to image_tag('donation.png', style: 'height: 80px'), charities_path %>
+        <%= link_to image_tag('donation.png', style: 'height: 80px', alt: 'donation box with hearts coming out icon'), charities_path %>
       </div>
     </div>
     <div class="fixedButton">
-       <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 120px'%></div>
+       <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 120px', alt: 'plus icon'%></div>
     </div>
 
 
   </body>
+  
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then(function (registration) {
+        console.log("success load");
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+   }
+ </script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

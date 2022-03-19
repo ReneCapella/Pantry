@@ -1,41 +1,60 @@
-
-
-<div class="notice-board">
-</div>
-
 <% if @pantry.food_items %>
   <div class="container-fluid">
 
     <% @pantry.food_items.each do |food_item| %>
+
     <div id="food_items">
+
       <% if Date.today < food_item.batch.exp_date && Date.today < food_item.batch.best_by %>
       <!-- food is fresh! -->
-        <div class="card text-white bg-success mb-3 mx-auto" style="max-width: 18rem;">
-          <div class="card-header"><%= food_item.name %> </div>
-          <div class="card-body text-white">
-            <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
-            <p class="card-text">Expiration date: <%= food_item.batch.exp_date %> </p>
+        <div class="mx-auto deletable shadow text-center fresh food_item">
+          <div class="donate" style="display: none; background-color: green; height: 100%; width: 100%;">
+            <i class="fa-solid fa-hand-holding-heart"></i>
           </div>
-        </div>
+          <div class="name" style='width: 100%'>
+            <p><%= food_item.name%></p>
+          </div>
+          <div class="trash" style="display: none;">
+            <i class="fa-solid fa-trash"></i>
+          </div>
+          <%= form_with(model: food_item, method: :delete, remote: true, defaults: {format: 'js'}, html: {id: "form"}) do |f| %>
+            <%= f.hidden_field :id, value: food_item.id %>
+            <%= f.submit "", style: 'display:none;' %>
+          <% end %>
+          </div>
       <% elsif Date.today <= food_item.batch.exp_date && Date.today >= food_item.batch.best_by %>
       <!-- food is almost not fresh -->
-        <div class="card text-white bg-warning mb-3 mx-auto" style="max-width: 18rem;">
-          <div class="card-header"><%= food_item.name %> </div>
-          <div class="card-body text-white">
-            <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
-            <p class="card-text">Expiration date: <%= food_item.batch.exp_date %> </p>
-            <a href="<%= charities_path %> " class="btn btn-primary">Donate this item</a>
+        <div class="mx-auto deletable shadow text-center not-so-fresh food_item">
+          <div class="donate" style="display: none;">
+            <i class="fa-solid fa-hand-holding-heart"></i>
           </div>
-        </div>
-
+          <div class="name" style='width: 100%'>
+            <p><%= food_item.name%></p>
+          </div>
+          <div class="trash" style="display: none;">
+            <i class="fa-solid fa-trash"></i>
+          </div>
+          <%= form_with(model: food_item, method: :delete,html: {id: "form"}) do |f| %>
+            <%= f.hidden_field :id, value: food_item.id %>
+            <%= f.submit "", style: 'display:none;' %>
+          <% end %>
+          </div>
       <% else %>
       <!-- food is bad -->
-      <div class="card text-white bg-danger mb-3 mx-auto" style="max-width: 18rem;">
-        <div class="card-header"><%= food_item.name %> </div>
-        <div class="card-body text-white">
-          <p class="card-text">Best by date: <%= food_item.batch.best_by %> </p>
-          <p class="card-text">Expiration date: <%= food_item.batch.exp_date %> </p>
+      <div class="mx-auto deletable shadow text-center spoiled food_item">
+        <div class="donate" style="display: none;">
+          <i class="fa-solid fa-hand-holding-heart"></i>
         </div>
+        <div class="name" style='width: 100%'>
+          <p><%= food_item.name%></p>
+        </div>
+        <div class="trash" style="display: none;">
+          <i class="fa-solid fa-trash"></i>
+        </div>
+        <%= form_with(model: food_item, method: :delete,html: {id: "form"}) do |f| %>
+          <%= f.hidden_field :id, value: food_item.id %>
+          <%= f.submit "", style: 'display:none;' %>
+        <% end %>
       </div>
       <% end %>
     </div>
@@ -44,3 +63,89 @@
 <% else %>
   <h3>Nothing here yet!</h3>
 <% end %>
+
+
+<script>
+  window.addEventListener('load', function(){
+
+    var elements = document.querySelectorAll('.deletable'),
+        swipedir,
+        startX,
+        startY,
+        distX,
+        distY,
+        threshold = 150, //required min distance traveled to be considered swipe
+        restraint = 100,
+        allowedTime = 1000, // maximum time allowed to travel that distance
+        elapsedTime,
+        startTime
+        // handleswipe = callback || function(swipedir){}
+
+    function handleswipe(swipedir, touchsurface, e){
+      console.log("here");
+      if (swipedir =='left') {
+        //Todo: solve this
+          var f = touchsurface.querySelector('#form');
+          f.submit();
+          touchsurface.remove();
+      } else if (swipedir =='right') {
+          touchsurface.remove();
+      } else {
+        //do nothing
+      }
+    }
+    elements.forEach(touchsurface => {
+      touchsurface.addEventListener('touchstart', function(e){
+          swipedir = 'none'
+
+          var touchobj = e.changedTouches[0]
+          dist = 0
+          startX = touchobj.pageX
+          startY = touchobj.pageY
+          startTime = new Date().getTime() // record time when finger first makes contact with surface
+          e.preventDefault()
+      }, false)
+
+      touchsurface.addEventListener('touchmove', function(e){
+        console.log("in touchmove");
+        var touchobj = e.changedTouches[0]
+        distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+        swipedir = (distX < 0)? 'left' : 'right'
+        var trash = touchsurface.querySelector('.trash')
+        var donate = touchsurface.querySelector('.donate')
+        if (swipedir == 'left'){
+          donate.style.display = "none"
+          trash.style ="display: flex; align-items: center; justify-content: center; background-color: red; height: 100%;width: " + Math.abs(distX) +"px;"
+        } else if (swipedir == 'right') {
+          trash.style.display = "none"
+          donate.style ="display: flex; align-items: center; justify-content: center; background-color: green; height: 100%;width: " + Math.abs(distX) +"px;"
+        }
+
+        e.preventDefault() // prevent scrolling when inside DIV
+      }, false)
+
+      touchsurface.addEventListener('touchend', function(e){
+          var touchobj = e.changedTouches[0]
+          distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+          distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
+          elapsedTime = new Date().getTime() - startTime // get time elapsed
+          // check that elapsed time is within specified, horizontal dist traveled >= threshold, and vertical dist traveled <= 100
+          if (elapsedTime <= allowedTime){ // first condition for awipe met
+            if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+                swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+                handleswipe(swipedir, touchsurface, e)
+            }
+            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+                swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+            }
+        } else {
+          touchsurface.querySelector('.trash').style.display = "none"
+          touchsurface.querySelector('.donate').style.display = "none"
+        }
+          e.preventDefault()
+      }, false)
+    });
+
+}, false) // end window.onload
+
+</script>
