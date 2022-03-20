@@ -1,4 +1,10 @@
-<% if @pantry.food_items %>
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
+
+<% if @pantry.food_items.count > 0 %>
   <div class="container-fluid">
 
     <% @pantry.food_items.each do |food_item| %>
@@ -17,7 +23,11 @@
           <div class="trash" style="display: none;">
             <i class="fa-solid fa-trash"></i>
           </div>
-          <%= form_with(model: food_item, method: :delete, remote: true, defaults: {format: 'js'}, html: {id: "form"}) do |f| %>
+          <%= form_with(method: :post, url: donate_path(food_item.id), html: {id: "donate-form"}) do |f| %>
+            <%= f.hidden_field :id, value: food_item.id %>
+            <%= f.submit "", style: 'display:none;' %>
+          <% end %>
+          <%= form_with(model: food_item, method: :delete, remote: true, defaults: {format: 'js'}, html: {id: "delete-form"}) do |f| %>
             <%= f.hidden_field :id, value: food_item.id %>
             <%= f.submit "", style: 'display:none;' %>
           <% end %>
@@ -34,7 +44,11 @@
           <div class="trash" style="display: none;">
             <i class="fa-solid fa-trash"></i>
           </div>
-          <%= form_with(model: food_item, method: :delete,html: {id: "form"}) do |f| %>
+          <%= form_with(method: :post, url: donate_path(food_item.id), html: {id: "donate-form"}) do |f| %>
+            <%= f.hidden_field :id, value: food_item.id %>
+            <%= f.submit "", style: 'display:none;' %>
+          <% end %>
+          <%= form_with(model: food_item, method: :delete,html: {id: "delete-form"}) do |f| %>
             <%= f.hidden_field :id, value: food_item.id %>
             <%= f.submit "", style: 'display:none;' %>
           <% end %>
@@ -51,7 +65,7 @@
         <div class="trash" style="display: none;">
           <i class="fa-solid fa-trash"></i>
         </div>
-        <%= form_with(model: food_item, method: :delete,html: {id: "form"}) do |f| %>
+        <%= form_with(model: food_item, method: :delete,html: {id: "delete-form"}) do |f| %>
           <%= f.hidden_field :id, value: food_item.id %>
           <%= f.submit "", style: 'display:none;' %>
         <% end %>
@@ -61,7 +75,16 @@
     <% end %>
   </div>
 <% else %>
-  <h3>Nothing here yet!</h3>
+<div class="container mx-auto d-flex row justify-content-center align-item-center" style="height: 100vw;">
+  <div class="">
+    <p>Nothing here yet.  <%=link_to "Add an order here!",new_food_item_path(@pantry.id) %></p>
+  </div>
+  <div class="">
+    <%= link_to image_tag('1261163.png',style: 'height: 150px'), new_food_item_path(@pantry.id)%>
+  </div>
+
+</div>
+
 <% end %>
 
 
@@ -79,17 +102,20 @@
         allowedTime = 1000, // maximum time allowed to travel that distance
         elapsedTime,
         startTime
-        // handleswipe = callback || function(swipedir){}
 
     function handleswipe(swipedir, touchsurface, e){
-      console.log("here");
       if (swipedir =='left') {
-        //Todo: solve this
-          var f = touchsurface.querySelector('#form');
+          console.log("just swiped LEFT");
+          var f = touchsurface.querySelector('#delete-form');
           f.submit();
           touchsurface.remove();
       } else if (swipedir =='right') {
-          touchsurface.remove();
+          console.log("just swiped RIGHT");
+          var f = touchsurface.querySelector('#donate-form');
+          f.submit();
+          i = document.createElement("i");
+          i.innerHTML = '<i class="fa-solid fa-hand-holding-heart"></i>';
+          touchsurface.append(i);
       } else {
         //do nothing
       }
@@ -103,7 +129,7 @@
           startX = touchobj.pageX
           startY = touchobj.pageY
           startTime = new Date().getTime() // record time when finger first makes contact with surface
-          e.preventDefault()
+          // e.preventDefault()
       }, false)
 
       touchsurface.addEventListener('touchmove', function(e){
@@ -121,7 +147,7 @@
           donate.style ="display: flex; align-items: center; justify-content: center; background-color: green; height: 100%;width: " + Math.abs(distX) +"px;"
         }
 
-        e.preventDefault() // prevent scrolling when inside DIV
+        // e.preventDefault() // prevent scrolling when inside DIV
       }, false)
 
       touchsurface.addEventListener('touchend', function(e){
@@ -142,7 +168,7 @@
           touchsurface.querySelector('.trash').style.display = "none"
           touchsurface.querySelector('.donate').style.display = "none"
         }
-          e.preventDefault()
+          // e.preventDefault()
       }, false)
     });
 

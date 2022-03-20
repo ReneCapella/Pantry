@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_15_020439) do
+ActiveRecord::Schema.define(version: 2022_03_19_231602) do
 
   create_table "batches", force: :cascade do |t|
     t.integer "producer_id", null: false
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 2022_03_15_020439) do
     t.index ["store_id"], name: "index_batches_on_store_id"
   end
 
+  create_table "food_item_statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "food_items", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -32,7 +38,9 @@ ActiveRecord::Schema.define(version: 2022_03_15_020439) do
     t.integer "pantry_id"
     t.integer "batch_id"
     t.integer "order_id"
+    t.integer "food_item_status_id"
     t.index ["batch_id"], name: "index_food_items_on_batch_id"
+    t.index ["food_item_status_id"], name: "index_food_items_on_food_item_status_id"
     t.index ["order_id"], name: "index_food_items_on_order_id"
     t.index ["pantry_id"], name: "index_food_items_on_pantry_id"
   end
@@ -47,7 +55,6 @@ ActiveRecord::Schema.define(version: 2022_03_15_020439) do
   create_table "pantries", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "primary", default: false, null: false
     t.string "name", default: "my pantry"
   end
 
@@ -68,6 +75,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_020439) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "primary", default: false, null: false
     t.index ["pantry_id"], name: "index_user_pantries_on_pantry_id"
     t.index ["user_id"], name: "index_user_pantries_on_user_id"
   end

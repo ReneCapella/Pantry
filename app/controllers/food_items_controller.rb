@@ -28,13 +28,20 @@ class FoodItemsController < ApplicationController
   # POST /food_items or /food_items.json
   def create
     #TODO this really isn't correct: users are not creating new food items: this should be an update
-    order = Order.find(food_item_params["order_id"])
+    begin
+      order = Order.find(food_item_params["order_id"])
+    rescue ActiveRecord::RecordNotFound => e
+      notice = "Order not found"
+      # redirect_to new_food_item_path(food_item_params["order_id"])
+    end
+
     if order
       order.transfer_ownership(food_item_params["pantry_id"])
+      notice = "Food item was successfully transfered"
     end
 
     respond_to do |format|
-        format.html { redirect_to pantry_path(food_item_params["pantry_id"]), notice: "Food item was successfully transfered." }
+        format.html { redirect_to pantry_path(food_item_params["pantry_id"]), notice: notice }
     end
   end
 
@@ -52,13 +59,17 @@ class FoodItemsController < ApplicationController
   end
 
   def donate
-    #update the donated column on food item
-    #@food_item.update(donated: true)
+    @food_item = FoodItem.find(params[:id])
+    pantry_id = @food_item.pantry_id
+    @food_item.set_donated
+    redirect_back fallback_location: pantry_path(pantry_id)
+    # respond_to do |format|
+    #   format.html { redirect_back fallback_location: pantry_path(pantry_id) }
+    # end
   end
 
   # DELETE /food_items/1 or /food_items/1.json
   def destroy
-
     @food_item = FoodItem.find(params[:id])
     pantry_id = @food_item.pantry_id
     @food_item.destroy
