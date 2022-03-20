@@ -19,6 +19,11 @@
           </div>
           <div class="name" style='width: 100%'>
             <p><%= food_item.name%></p>
+            <% if food_item.try(:food_item_status).try(:name) %>
+              <% if food_item.food_item_status.name == 'donated' %>
+                <em style="font-size: 11px;">pending donation</em>
+              <% end %>
+            <% end %>
           </div>
           <div class="trash" style="display: none;">
             <i class="fa-solid fa-trash"></i>
@@ -40,6 +45,11 @@
           </div>
           <div class="name" style='width: 100%'>
             <p><%= food_item.name%></p>
+            <% if food_item.try(:food_item_status).try(:name) %>
+              <% if food_item.food_item_status.name == 'donated' %>
+                <em style="font-size: 11px;">pending donation</em>
+              <% end %>
+            <% end %>
           </div>
           <div class="trash" style="display: none;">
             <i class="fa-solid fa-trash"></i>
@@ -105,17 +115,12 @@
 
     function handleswipe(swipedir, touchsurface, e){
       if (swipedir =='left') {
-          console.log("just swiped LEFT");
           var f = touchsurface.querySelector('#delete-form');
           f.submit();
           touchsurface.remove();
       } else if (swipedir =='right') {
-          console.log("just swiped RIGHT");
           var f = touchsurface.querySelector('#donate-form');
           f.submit();
-          i = document.createElement("i");
-          i.innerHTML = '<i class="fa-solid fa-hand-holding-heart"></i>';
-          touchsurface.append(i);
       } else {
         //do nothing
       }
@@ -133,7 +138,6 @@
       }, false)
 
       touchsurface.addEventListener('touchmove', function(e){
-        console.log("in touchmove");
         var touchobj = e.changedTouches[0]
         distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
         swipedir = (distX < 0)? 'left' : 'right'
