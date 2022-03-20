@@ -6,7 +6,7 @@ class Order < ApplicationRecord
 
   def transfer_ownership(pantry_id)
     self.food_items.each do |item|
-      item.update!(pantry_id: pantry_id)
+      item.update!(pantry_id: pantry_id, order_id: self.id)
     end
   end
 end

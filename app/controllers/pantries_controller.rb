@@ -5,11 +5,13 @@ class PantriesController < ApplicationController
   # GET /pantries or /pantries.json
   def index
     @pantries = Pantry.all
+    primary_pantry = UserPantry.where(primary:true, user_id: current_user.id)
+    @pantry = Pantry.find(primary_pantry.first.pantry_id)
   end
 
   # GET /pantries/1 or /pantries/1.json
   def show
-    
+
   end
 
   # GET /pantries/new
@@ -62,6 +64,8 @@ class PantriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pantry
+      puts "PARAMS PANTRY"
+      puts params
       @pantry = Pantry.find(params[:id])
     end
 

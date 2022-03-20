@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'static_pages/welcome'
   # Defines the root path route ("/")
   root "pantries#index"
-  
+
   get '/service-worker.js' => "service_worker#service_worker"
   get '/manifest.json' => "service_worker#manifest"
 
@@ -34,4 +34,5 @@ Rails.application.routes.draw do
   get '/about' => 'static_pages#about'
   get '/search' => 'charities#search'
   get '/charities' => 'charities#index'
+  post '/donate' => 'food_items#donate'
 end

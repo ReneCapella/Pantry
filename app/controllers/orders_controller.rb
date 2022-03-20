@@ -8,6 +8,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1 or /orders/1.json
   def show
+
   end
 
   # GET /orders/new
@@ -60,7 +61,11 @@ class OrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
-      @order = Order.find(params[:id])
+      begin
+        @order = Order.find(params[:id])
+      rescue ActiveRecord::RecordNotFound => e
+        flash.now[:notice] = "Order not found"
+      end
     end
 
     # Only allow a list of trusted parameters through.

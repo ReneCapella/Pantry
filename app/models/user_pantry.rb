@@ -4,8 +4,8 @@ class UserPantry < ApplicationRecord
 
   before_save :set_primary
 
-  private
   def set_primary
-    UserPantry.where.not(id: id).update_all(primary: false)
+    pantries = Pantry.where.not(id: id)
+    pantries.each {|p| p.user_pantries.each { |up| up.update(primary: false)}}
   end
 end

@@ -43,6 +43,7 @@ function onActivate(event) {
 
 // Borrowed from https://github.com/TalAter/UpUp
 function onFetch(event) {
+  console.log("onFetch");
   event.respondWith(
     // try to return untouched request from network first
     fetch(event.request).catch(function() {

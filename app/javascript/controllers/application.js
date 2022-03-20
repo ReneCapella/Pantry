@@ -1,5 +1,5 @@
 import { Application } from "@hotwired/stimulus"
-
+ console.log("AHHHH");
 const application = Application.start()
 
 // Configure Stimulus development experience
