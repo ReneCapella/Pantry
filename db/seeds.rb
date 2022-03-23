@@ -55,7 +55,6 @@ batch_bad = Batch.create_or_find_by(producer_id: producer.id, store_id: store.id
 
 # create a Pantry
 pantry = basic_user.pantries.create()
-pantry.user_pantries.first.update(primary: true)
 
 #create a food item
 FoodItem.create(name: "Apple", pantry_id: pantry.id)

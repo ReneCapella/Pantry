@@ -1,23 +1,24 @@
 
 <div class="container-fluid">
   <p style="color: green"><%= notice %></p>
-
-  <% if @pantry %>
+  <% if @pantries.count > 0 %>
+    <% @pantries.each do |pantry|%>
     <div id="pantries">
       <div class="card mb-3 shadow mx-auto" style="width: 18rem;">
         <div class="card-header">
-          <%= @pantry.name %>
+          <%= pantry.name %>
         </div>
         <ul class="list-group list-group-flush">
-          <% if pantry_expiration_count(@pantry.id) == 0 %>
+          <% if pantry_expiration_count(pantry.id) == 0 %>
             <li class="list-group-item" id="expiration">All items fresh</li>
           <% else %>
             <li class="list-group-item" id="expiration">Items are expired</li>
           <% end %>
-          <li class="list-group-item" id="donations">Donatable Item Count: <%= donatable_item_count(@pantry.id) %></li>
-          <li class="list-group-item" id="show-pantry"><%= link_to "Look Inside", @pantry %></li>
+          <li class="list-group-item" id="donations">Donatable Item Count: <%= donatable_item_count(pantry.id) %></li>
+          <li class="list-group-item" id="show-pantry"><%= link_to "Look Inside", pantry %></li>
         </ul>
       </div>
+      <% end %>
   <% else %>
   </div>
 

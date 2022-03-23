@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_231602) do
+ActiveRecord::Schema.define(version: 2022_03_21_022621) do
 
   create_table "batches", force: :cascade do |t|
     t.integer "producer_id", null: false
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2022_03_19_231602) do
     t.integer "batch_id"
     t.integer "order_id"
     t.integer "food_item_status_id"
+    t.time "deleted_at"
     t.index ["batch_id"], name: "index_food_items_on_batch_id"
     t.index ["food_item_status_id"], name: "index_food_items_on_food_item_status_id"
     t.index ["order_id"], name: "index_food_items_on_order_id"
@@ -49,13 +50,16 @@ ActiveRecord::Schema.define(version: 2022_03_19_231602) do
     t.integer "store_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.boolean "transferred", default: false, null: false
     t.index ["store_id"], name: "index_orders_on_store_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "pantries", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name", default: "my pantry"
+    t.string "name"
   end
 
   create_table "producers", force: :cascade do |t|
@@ -70,16 +74,6 @@ ActiveRecord::Schema.define(version: 2022_03_19_231602) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "user_pantries", force: :cascade do |t|
-    t.integer "pantry_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "primary", default: false, null: false
-    t.index ["pantry_id"], name: "index_user_pantries_on_pantry_id"
-    t.index ["user_id"], name: "index_user_pantries_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -89,7 +83,9 @@ ActiveRecord::Schema.define(version: 2022_03_19_231602) do
     t.integer "role", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "pantry_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["pantry_id"], name: "index_users_on_pantry_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

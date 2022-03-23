@@ -1,17 +1,22 @@
 class PantriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_pantry, only: %i[ show edit update destroy ]
+  before_action :set_pantry, only: %i[ edit update destroy ]
 
   # GET /pantries or /pantries.json
   def index
-    @pantries = Pantry.all
-    primary_pantry = UserPantry.where(primary:true, user_id: current_user.id)
-    @pantry = Pantry.find(primary_pantry.first.pantry_id)
+    user = User.find(current_user.id)
+    @pantry = user.try(:pantry)
+    if @pantry
+      redirect_to pantry_path(@pantry.id)
+    else
+      redirect_to new_pantry_path
+    end
   end
 
   # GET /pantries/1 or /pantries/1.json
   def show
-
+    user = User.find(current_user.id)
+    @pantry = user.pantry
   end
 
   # GET /pantries/new
@@ -29,6 +34,7 @@ class PantriesController < ApplicationController
 
     respond_to do |format|
       if @pantry.save
+        current_user.update(pantry_id: @pantry.id)
         format.html { redirect_to pantry_url(@pantry), notice: "Pantry was successfully created." }
         format.json { render :show, status: :created, location: @pantry }
       else
@@ -71,6 +77,6 @@ class PantriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pantry_params
-      params.fetch(:pantry, {}).permit(:user_id)
+      params.fetch(:pantry, {}).permit(:user_id, :name)
     end
 end
