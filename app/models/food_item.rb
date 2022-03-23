@@ -8,6 +8,8 @@ class FoodItem < ApplicationRecord
   accepts_nested_attributes_for :order
   accepts_nested_attributes_for :pantry
 
+  scope :active, -> { where(deleted_at: nil) }
+  scope :non_active, -> { where.not(deleted_at: nil)}
 
   before_save :set_default_name
 
@@ -19,9 +21,12 @@ class FoodItem < ApplicationRecord
 
   def set_donated
     status = FoodItemStatus.find_by_name('donated')
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     self.update(food_item_status_id: status.id)
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts self.food_item_status_id
+  end
+
+  def delete
+    puts "HERE!"
+    self.update(deleted_at: DateTime.now)
+    puts self.deleted_at
   end
 end

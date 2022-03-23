@@ -4,8 +4,9 @@ class FoodItemsController < ApplicationController
 
   # GET /food_items or /food_items.json
   def index
-    @non_donated_food_items = FoodItem.where(donated: false)
-    @marked_for_donation = FoodItem.where(donated: true)
+    donated_status = FoodItemStatus.find_by_name("donated")
+    @non_donated_food_items = FoodItem.active.where.not(status: donated_status.id)
+    @marked_for_donation = FoodItem.active.where(status: donated_status.id)
 
   end
 
@@ -36,8 +37,11 @@ class FoodItemsController < ApplicationController
     end
 
     if order
-      order.transfer_ownership(food_item_params["pantry_id"])
-      notice = "Food item was successfully transfered"
+      if order.transfer_ownership(food_item_params["pantry_id"], current_user.id)
+        notice = "Food item was successfully transfered"
+      else
+        notice = "Order not available for transfer. "
+      end
     end
 
     respond_to do |format|
@@ -72,7 +76,7 @@ class FoodItemsController < ApplicationController
   def destroy
     @food_item = FoodItem.find(params[:id])
     pantry_id = @food_item.pantry_id
-    @food_item.destroy
+    @food_item.delete
     respond_to do |format|
       format.html { redirect_back fallback_location: pantry_path(pantry_id) }
     end

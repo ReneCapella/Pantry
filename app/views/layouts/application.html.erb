@@ -36,21 +36,23 @@
 
     </nav>
     <%= yield %>
-    <div class="slider "id="slider">
-      <div class="fixedIcon1">
-        <% if @pantry %>
-          <%= link_to image_tag('1261163.png', style: 'height: 80px', alt: 'food on plate icon'), new_food_item_path(@pantry.id) %>
-        <% else %>
-          <%= link_to image_tag('1261163.png', style: 'height: 80px', alt: 'food on plate icon'), new_food_item_path() %>
-        <% end %>
+    <% if current_user %>
+      <div class="slider "id="slider">
+        <div class="fixedIcon1">
+          <% if @pantry %>
+            <%= link_to image_tag('1261163.png', style: 'height: 80px', alt: 'food on plate icon'), new_food_item_path(@pantry.id) %>
+          <% else %>
+            <%= link_to image_tag('1261163.png', style: 'height: 80px', alt: 'food on plate icon'), new_food_item_path() %>
+          <% end %>
+        </div>
+        <div class="fixedIcon2">
+          <%= link_to image_tag('donation.png', style: 'height: 80px', alt: 'donation box with hearts coming out icon'), charities_path %>
+        </div>
       </div>
-      <div class="fixedIcon2">
-        <%= link_to image_tag('donation.png', style: 'height: 80px', alt: 'donation box with hearts coming out icon'), charities_path %>
+      <div class="fixedButton">
+         <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 100px', alt: 'plus icon'%></div>
       </div>
-    </div>
-    <div class="fixedButton">
-       <div class=" " onclick="document.getElementById('slider').classList.toggle('open');"><%= image_tag 'plus-4-128.png', style: 'height: 120px', alt: 'plus icon'%></div>
-    </div>
+    <% end %>
 
 
   </body>

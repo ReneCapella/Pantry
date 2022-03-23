@@ -4,6 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :user_pantries
-  has_many :pantries, :through => :user_pantries
+  belongs_to :pantry, optional: true
 end
