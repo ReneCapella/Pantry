@@ -4,18 +4,37 @@
 </div>
 <% end %>
 
-<div class="container-fluid">
+<div class="container-fluid" id="pantry-show">
+  <div class="row mx-auto justify-content-center">
+
+    <div class="test col-sm-4 col-md-4 shadow sidebar-sticky" id="test">
+      <% if @pantry.try(:food_items) %>
+        <% if @pantry.food_items.donated_list%>
+          <div class="container-fluid">
+            <div class="flex-column" style="background-color: white;">
+              <h4 class="p-3">Items Marked for Donation</h4>
+              <% @pantry.food_items.donated_list.each do |item|%>
+                <p class="p-3"> <%=item.name%></p>
+              <%end%>
+            </div>
+          </div>
+
+        <% end %>
+      <% end %>
+    </div>
+
+
 <% if @pantry.try(:food_items) %>
   <% if @pantry.food_items.active.count > 0 %>
+  <div class="col-sm-8 col-md-6 shadow" style="background-color: white;">
+  <div class="row" id="food_items">
     <% @pantry.food_items.active.each do |food_item| %>
-      <div id="food_items">
-
 
       <% if Date.today < food_item.batch.exp_date && Date.today < food_item.batch.best_by %>
     <!-- food is fresh! -->
-        <div class="mx-auto deletable shadow text-center fresh food_item">
-          <div class="donate" style="display: none; background-color: green; height: 100%; width: 100%;">
-            <i class="fa-solid fa-hand-holding-heart"></i>
+        <div class="col-lg-4 border border-white deletable shadow-sm rounded text-center fresh food_item">
+          <div class="donate">
+              <i class="fa-solid fa-hand-holding-heart"></i>
           </div>
           <div class="name" style='width: 100%'>
             <p><%= food_item.name%></p>
@@ -25,7 +44,7 @@
               <% end %>
             <% end %>
           </div>
-          <div class="trash" style="display: none;">
+          <div class="trash">
             <i class="fa-solid fa-trash"></i>
           </div>
           <%= form_with(method: :post, url: donate_path(food_item.id), html: {id: "donate-form"}) do |f| %>
@@ -36,12 +55,12 @@
             <%= f.hidden_field :id, value: food_item.id %>
             <%= f.submit "", style: 'display:none;' %>
           <% end %>
-          </div>
+        </div>
       <% elsif Date.today <= food_item.batch.exp_date && Date.today >= food_item.batch.best_by %>
     <!-- food is almost not fresh -->
-        <div class="mx-auto deletable shadow text-center not-so-fresh food_item">
-          <div class="donate" style="display: none;">
-            <i class="fa-solid fa-hand-holding-heart"></i>
+        <div class="col-lg-4 border border-white deletable shadow-sm rounded text-center not-so-fresh food_item">
+          <div class="donate">
+              <i class="fa-solid fa-hand-holding-heart "></i>
           </div>
           <div class="name" style='width: 100%'>
             <p><%= food_item.name%></p>
@@ -51,7 +70,7 @@
               <% end %>
             <% end %>
           </div>
-          <div class="trash" style="display: none;">
+          <div class="trash">
             <i class="fa-solid fa-trash"></i>
           </div>
           <%= form_with(method: :post, url: donate_path(food_item.id), html: {id: "donate-form"}) do |f| %>
@@ -65,14 +84,13 @@
         </div>
       <% else %>
     <!-- food is bad -->
-        <div class="mx-auto deletable shadow text-center spoiled food_item">
-          <div class="donate" style="display: none;">
-            <i class="fa-solid fa-hand-holding-heart"></i>
+        <div class="col-lg-4 border border-white deletable shadow-sm rounded text-center spoiled food_item">
+          <div class="donate">
           </div>
           <div class="name" style='width: 100%'>
             <p><%= food_item.name%></p>
           </div>
-          <div class="trash" style="display: none;">
+          <div class="trash">
             <i class="fa-solid fa-trash"></i>
           </div>
           <%= form_with(model: food_item, method: :delete,html: {id: "delete-form"}) do |f| %>
@@ -81,12 +99,12 @@
           <% end %>
         </div>
       <% end %>
-
-    </div>
-
-  <% end %>
+    <% end %>
+  </div>
+  </div>
 <% else %>
-  <div class="container mx-auto d-flex row justify-content-center align-item-center" style="height: 100vw;">
+<div class="col-sm-8 col-md-6 shadow-sm rounded" style="background-color:white;">
+  <div class="container mx-auto d-flex row justify-content-center align-item-center" style="height: 100vh;">
     <div class="">
       <p>Nothing here yet.  <%=link_to "Add an order here!",new_food_item_path(@pantry.id) %></p>
     </div>
@@ -96,6 +114,9 @@
   </div>
 <% end %>
 <% end %>
+
+  </div>
+
 </div>
 
 
@@ -103,6 +124,8 @@
   window.addEventListener('load', function(){
 
     var elements = document.querySelectorAll('.deletable'),
+    allTrash = document.querySelectorAll('.trash'),
+    allDonate = document.querySelectorAll('.donate'),
     swipedir,
     startX,
     startY,
@@ -126,6 +149,21 @@
         //do nothing
       }
     }
+    allTrash.forEach(trashIcon => {
+      trashIcon.addEventListener('click', function() {
+      // submit form
+      var f = trashIcon.parentNode.querySelector('#delete-form');
+      f.submit();
+      }, false);
+    })
+    allDonate.forEach(donateIcon => {
+      donateIcon.addEventListener('click', function() {
+      // submit form
+      var f = donateIcon.parentNode.querySelector('#donate-form');
+      f.submit();
+      }, false);
+    })
+
     elements.forEach(touchsurface => {
       touchsurface.addEventListener('touchstart', function(e){
         swipedir = 'none'

@@ -1,20 +1,27 @@
 
-<div class="container">
+<div class="container-fluid" style="background-color: white;">
   <h2>Food Donation Centers in my area</h2>
-</div>
-<div class="container-fluid shadow">
-  <iframe
-    width="100%"
-    height="300px"
-    frameborder="0" style="border:0"
-    src="https://maps.google.com/maps?q=food+pantry,near+me&output=svembed" allowfullscreen>
-  </iframe>
+  <div class="row">
+    <div class="col shadow mx-auto">
+      <iframe
+        width="100%"
+        height="300px"
+        frameborder="0" style="border:0"
+        src="https://maps.google.com/maps?q=food+pantry,near+me&output=svembed" allowfullscreen>
+      </iframe>
+    </div>
+
+  </div>
+
 </div>
 <% if @donated_items%>
-  <div class="container">
-    <h4>Items Marked for Donation</h4>
-    <%@donated_items.each do |item|%>
-      <p><%=item.name%></p>
-    <%end%>
+  <div class="container-fluid">
+    <div class="flex-column m-5 shadow" style="background-color: white;">
+      <h4 class="p-3">Items Marked for Donation</h4>
+      <%@donated_items.each do |item|%>
+        <p class="p-3"> <%=item.name%></p>
+      <%end%>
+    </div>
   </div>
+
 <% end %>

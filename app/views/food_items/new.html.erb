@@ -1,10 +1,5 @@
 <div class="container">
   <h1>Enter your Order</h1>
-  <button id="getUserMediaButton">Scan a Recipt</button>
-  <button id="qr-button">Detect barcode</button>
-  <div>
-    <video id="video" autoplay></video>
-  </div>
 
   <%= form_with(model: @food_item) do |form| %>
     <% if @food_item.errors.any? %>
@@ -49,6 +44,16 @@
       <%= link_to "Back to food items", pantries_path %>
     </div>
   <% end %>
+
+    <div class="row" id="scanner">
+      <div class="row justify-content-center">
+        <video id="video" autoplay></video>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <button class="rounded p-3 m-3" id="getUserMediaButton">Scan a Recipt</button>
+        <button class="rounded p-3 m-3" id="qr-button">Detect barcode</button>
+      </div>
+    </div>
 </div>
 
 <script type="text/javascript">
