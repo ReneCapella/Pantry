@@ -10,6 +10,7 @@ class FoodItem < ApplicationRecord
 
   scope :active, -> { where(deleted_at: nil) }
   scope :non_active, -> { where.not(deleted_at: nil)}
+  scope :donated_list, -> { active.where(food_item_status_id: 2)}
 
   before_save :set_default_name
 
