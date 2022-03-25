@@ -20,8 +20,10 @@ class FoodItem < ApplicationRecord
   end
 
   def set_donated
-    status = FoodItemStatus.find_by_name('donated')
-    self.update(food_item_status_id: status.id)
+    unless self.batch.exp_date <= DateTime.now
+      status = FoodItemStatus.find_by_name('donated')
+      self.update(food_item_status_id: status.id)
+    end
   end
 
   def delete

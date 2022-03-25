@@ -16,13 +16,40 @@
 @import "font-awesome";
 
  body {
+   font-family: monospace;
    padding-top: 130px;
+   background-color: #f3f8fc;
+   color: #565656;
  }
+
+ .trash {
+   display: none; /* Hide button */
+ }
+
+ .donate {
+   display: none; /* Hide button */
+ }
+
+ .deletable:hover {
+   background: #000;
+   opacity:0.5;
+   border-radius:60px;
+   .trash {
+     display: block;
+   }
+   .donate {
+     display: block;
+   }
+   i {
+     color: white;
+   }
+}
+
  .fixedButton{
      position: fixed;
      bottom: 0px;
      right: 0px;
-     padding: 5px;
+     // padding: 5px;
      background-color: white;
      border-radius: 50%;
 
@@ -76,16 +103,50 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 18rem;
   height: 90px;
 }
+#food_items {
+  margin-left: 0px;
+  margin-right: 0px;
+}
 
-// .fresh {
-//   display: flex;
-//   justify-content: space-around;
-// }
-//
-// .not-so-fresh {
-//   display: flex;
-//   justify-content: space-around;
-// }
+#test {
+  height: 100vh;
+  margin-right: 10px;
+  background-color: white;
+}
+
+#scanner {
+  display: none;
+}
+
+@media (max-width: 1300px) {
+  #pantry-show {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  #pantry-show {
+    max-width: 90%;
+  }
+  #scanner {
+    display: block;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+  #pantry-show {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 763px) {
+
+  #test {
+    display: none;
+  }
+
+}
