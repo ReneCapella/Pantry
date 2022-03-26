@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_21_022621) do
+ActiveRecord::Schema.define(version: 2022_03_25_224621) do
 
   create_table "batches", force: :cascade do |t|
     t.integer "producer_id", null: false
@@ -62,10 +62,21 @@ ActiveRecord::Schema.define(version: 2022_03_21_022621) do
     t.string "name"
   end
 
+  create_table "producer_users", force: :cascade do |t|
+    t.integer "producer_id"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["producer_id"], name: "index_producer_users_on_producer_id"
+    t.index ["user_id"], name: "index_producer_users_on_user_id"
+  end
+
   create_table "producers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_producers_on_user_id"
   end
 
   create_table "stores", force: :cascade do |t|
