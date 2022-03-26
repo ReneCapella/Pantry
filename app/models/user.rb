@@ -5,4 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :pantry, optional: true
+  
+  has_one :producer_user, required: false
+  has_one :producer, :through => :producer_user, required: false
+
+
+  enum role: { consumer: 0, producer: 2 }
 end

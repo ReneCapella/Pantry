@@ -29,6 +29,7 @@ class FoodItemsController < ApplicationController
   # POST /food_items or /food_items.json
   def create
     #TODO this really isn't correct: users are not creating new food items: this should be an update
+    puts food_item_params
     begin
       order = Order.find(food_item_params["order_id"])
     rescue ActiveRecord::RecordNotFound => e

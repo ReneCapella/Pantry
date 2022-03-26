@@ -1,10 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @producer %>
 
-<div>
-  <%= link_to "Edit this producer", edit_producer_path(@producer) %> |
-  <%= link_to "Back to producers", producers_path %>
-
-  <%= button_to "Destroy this producer", @producer, method: :delete %>
+<div class="container-fluid">
+  <div class="flex-column">
+    <h2>This page will be a dashboard </h2>
+    <%= render @producer %>
+  </div>
+  <div class="flex-column">
+    <h3>Recall Section</h3>
+    <%= link_to "Recall a batch", batches_path() %>
+  </div>
+  <div class="flex-column">
+    <div>
+      <%= link_to "Edit this producer", edit_producer_path(@producer) %>
+    </div>
+  </div>
 </div>

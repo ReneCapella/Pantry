@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :batches
   resources :stores
-  resources :producers
+  resources :producers, only: [:show, :new, :create, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
 
