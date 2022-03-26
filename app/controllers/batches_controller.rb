@@ -3,7 +3,7 @@ class BatchesController < ApplicationController
 
   # GET /batches or /batches.json
   def index
-    @batches = Batch.all
+    @batches = Batch.all.where(producer_id: current_user.producer.id)
   end
 
   # GET /batches/1 or /batches/1.json
@@ -21,6 +21,7 @@ class BatchesController < ApplicationController
 
   # POST /batches or /batches.json
   def create
+    puts "here"
     @batch = Batch.new(batch_params)
 
     respond_to do |format|

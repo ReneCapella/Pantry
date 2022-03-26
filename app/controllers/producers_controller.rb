@@ -22,7 +22,7 @@ class ProducersController < ApplicationController
   # POST /producers or /producers.json
   def create
     @producer = Producer.new(producer_params)
-
+    
     respond_to do |format|
       if @producer.save
         format.html { redirect_to producer_url(@producer), notice: "Producer was successfully created." }
@@ -32,6 +32,7 @@ class ProducersController < ApplicationController
         format.json { render json: @producer.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /producers/1 or /producers/1.json
