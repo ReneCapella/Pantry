@@ -49,10 +49,10 @@ Now, I do not have barcodes or qr codes for you, but I do have 10 orders, ids 1-
 
 The producer views are still in the works:) But you can see all your batches, choose one batch, edit that batch (and update the foor recall).
 
-![login page](login.jpg)
-![food page](food.jpg)
-![order page](order.jpg)
-![donate page](donate.jpg)
+![login page](https://github.com/ReneCapella/Pantry/blob/main/login.png)
+![food page](https://github.com/ReneCapella/Pantry/blob/main/food.jpg)
+![order page](https://github.com/ReneCapella/Pantry/blob/main/order.jpg)
+![donate page](https://github.com/ReneCapella/Pantry/blob/main/donate.jpg)
 
 ## Postman
 ### Producer
