@@ -1,5 +1,5 @@
 # Pantry
-## The food planning application designed to support planning from production to consumer
+## The food awareness and tracking application designed to support planning from production to consumer
 According to the national nonprofit [ReFed](https://refed.org/about/who-we-are/#about-us), 
 35% of food per year is not sold or eaten, and that while 11% makes it to donation or recycle purposes,
 a whopping 54 tons (24%!) is completed unused and wasted.
@@ -49,7 +49,10 @@ Now, I do not have barcodes or qr codes for you, but I do have 10 orders, ids 1-
 
 The producer views are still in the works:) But you can see all your batches, choose one batch, edit that batch (and update the foor recall).
 
-![login page](image.jpg)
+![login page](login.jpg)
+![food page](food.jpg)
+![order page](order.jpg)
+![donate page](donate.jpg)
 
 ## Postman
 ### Producer
