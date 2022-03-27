@@ -37,6 +37,18 @@ The U.N. further lays out indicators and targets to achieve this goal:
 ### Access the Rails console
 `bundle exec rails c`
 
+# If you're running this locally:
+You have some users:
+username: basic@test.com
+password: tester
+
+username: producer@test.com
+password: tester
+
+Now, I do not have barcodes or qr codes for you, but I do have 10 orders, ids 1-10 that you can enter into the field on the add food page. You could also generate a qr code or bar code easily with one number 1-10 and scan the code to see that funcitonality.
+
+The producer views are still in the works:) But you can see all your batches, choose one batch, edit that batch (and update the foor recall).
+
 # Contribution Workflow
 All work is written in a feature branch off of beta and submitted as a pull request pointing to beta
 Before doing work, please message René at renecapella.dev@gmail.com to be added a contributor.
