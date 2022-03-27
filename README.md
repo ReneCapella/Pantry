@@ -63,7 +63,7 @@ Before doing work, please message René at renecapella.dev@gmail.com to be added
 8. Assign René to code review, add a detailed explanation of how test your feature, point to beta.
 
 # Future
-Pantry is off to a great start, and I have several ideas I think will take this productto the next level. 
+Pantry is off to a great start, and I have several ideas I think will take this product to the next level. 
 - push notifications for when food is marked as recalled
 - machine learning to help generate purchasing and planning for producers, retailers and consumers
 - Google cloud deployment for the machine learning, security and scalability
