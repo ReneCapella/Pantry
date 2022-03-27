@@ -49,6 +49,48 @@ Now, I do not have barcodes or qr codes for you, but I do have 10 orders, ids 1-
 
 The producer views are still in the works:) But you can see all your batches, choose one batch, edit that batch (and update the foor recall).
 
+![login page](image.jpg)
+
+## Postman
+### Producer
+Producer sends the batch. Batches 1-4 are premade in the db for you. To see these batches, in console, `bundle exec rails c` - here is an example batch you can send through:
+POST to url:
+`http://localhost:3000/api/v1/batches.json`
+```
+{
+  "batch": {
+    "producer_id": 1,
+    "item_name": "Canned Beans",
+    "best_by":"2022-01-01T00:00:00.000Z",
+    "exp_date":"2022-02-01T00:00:00.000Z"
+    }
+}
+```
+
+### Retailer
+The retailer or store sends over the order when a customer makes a purchase 
+POST to url: 
+`http://localhost:3000/api/v1/orders.json`
+```
+{
+  "order": {
+    "store_id": 1,
+    "food_items_attributes":[{
+        "batch_id": 1
+        },
+        {
+        "batch_id": 2
+        },
+        {
+        "batch_id": 3
+        },
+        {
+        "batch_id": 4
+        }]
+    }
+}
+```
+
 # Contribution Workflow
 All work is written in a feature branch off of beta and submitted as a pull request pointing to beta
 Before doing work, please message René at renecapella.dev@gmail.com to be added a contributor.
