@@ -16,7 +16,7 @@ environmental and social costs, strengthen economic competitiveness and reduce p
 
 The U.N. further lays out indicators and targets to achieve this goal:
 - [Target 12.3](https://sdg-tracker.org/sustainable-consumption-production#12.3): Halve global per capita food waste
-- [Target 12.5](): 
+- [Target 12.5](https://sdg-tracker.org/sustainable-consumption-production#12.5): Substantially reduce waste generation
 - [Target 12.6](https://sdg-tracker.org/sustainable-consumption-production#12.6): Encourage companies to adopt sustainable practices and sustainability reporting
 - [Target 12.8](https://sdg-tracker.org/sustainable-consumption-production#12.8): Promote universal understanding of sustainable lifestyles
       
@@ -61,3 +61,16 @@ Before doing work, please message René at renecapella.dev@gmail.com to be added
 6. Write your amazing code, make sure it passes lighthouse accessibility tests, make sure tests are passing, clean up debug and: `git add`, `git commit -m "PANTRY-<issue number> My detailed commit message here"`, `git push`
 7. Open a pull request
 8. Assign René to code review, add a detailed explanation of how test your feature, point to beta.
+
+# Future
+Pantry is off to a great start, and I have several ideas I think will take this productto the next level. 
+- push notifications for when food is marked as recalled
+- machine learning to help generate purchasing and planning for producers, retailers and consumers
+- Google cloud deployment for the machine learning, security and scalability
+
+# The Team
+Pantry was born out of multiple brainstorming and research iterations while finding a solution that could be simple but impactful. René Capella lead the sessions, planning. René also designed and implemented the rails application. 
+
+The project was followed closely by Khalid who provided constant design feedback and encouragement. All progress was posted to a public discord community where members were encouraged to oversee and offer thoughts and impressions. A HUGE THANK YOU is due to all the members of the Google Developer Student Club at North Seattle College for the support and feedback. 
+
+The project was overseen by Bill Barry, the Computer Science Full-time faculty and Deptartment Coordinator at North Seattle College.
